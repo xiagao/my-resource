@@ -1,50 +1,22 @@
 trigger:
-    email_recipients: 'xiagao@redhat.com, lijin@redhat.com'
+    email_recipients: 'xiagao@redhat.com'
     osversion:
         el7:
             major: '7'
-    windows_group: '2008R2 200832 200864 WIN732-WIN764 WIN832-WIN864 BLUE32-BLUE64 201264 2012R2-W10D32 W10S-W10D64'
+    windows_group: '2008R2 BLUE32-BLUE64'
 
 runtest:
-    email_recipients: 'xiagao@redhat.com, lijin@redhat.com, wyu@redhat.com, phou@redhat.com, yuhu@redhat.com, platform-ci-notification@redhat.com'
+    email_recipients: 'xiagao@redhat.com'
     reserve_time: '72'
     job_owner: 'xiagao'
     ks_file: ''
-    xml_file: '$WORKSPACE/kvmqe-ci/utils/jobgen/templates/whql-autotest.xml'
+    xml_file: '$WORKSPACE/my-resource/utils/jobgen/templates/whql-autotest.xml'
     windows_group:
         2008R2:
-            host_reqs: 'hostname=dell-me02-pem610-14.lab.eng.pek2.redhat.com'
+            host_reqs: ''
             cmd_base1: 'python XMLParsing.py -p 2008 -a R2 -c 192.168.0.5'
             cmd_base2: 'None'
-        200832:
-            host_reqs: 'hostname=dell-me02-pem620-03.lab.eng.pek2.redhat.com'
-            cmd_base1: 'python XMLParsing.py -p 2008 -a 32 -c 192.168.0.7'
-            cmd_base2: 'None'
-        200864:
-            host_reqs: 'hostname=dell-per730-47.lab.eng.pek2.redhat.com'
-            cmd_base1: 'python XMLParsing.py -p 2008 -a 64 -c 192.168.0.7'
-            cmd_base2: 'None'
-        WIN732-WIN764:
-            host_reqs: 'hostname=dell-per730-48.lab.eng.pek2.redhat.com'
-            cmd_base1: 'python XMLParsing.py -p WIN7 -a 32 -c 192.168.0.5'
-            cmd_base2: 'python XMLParsing.py -p WIN7 -a 64 -c 192.168.0.5'
-        WIN832-WIN864:
-            host_reqs: 'hostname=dell-per440-01.lab.eng.pek2.redhat.com'
-            cmd_base1: 'python XMLParsing.py -p WIN8 -a 32 -c 192.168.0.5'
-            cmd_base2: 'python XMLParsing.py -p WIN8 -a 64 -c 192.168.0.5'
         BLUE32-BLUE64:
-            host_reqs: 'hostname=dell-per440-02.lab.eng.pek2.redhat.com'
+            host_reqs: ''
             cmd_base1: 'python XMLParsing.py -p BLUE -a 32 -c 192.168.0.5'
             cmd_base2: 'python XMLParsing.py -p BLUE -a 64 -c 192.168.0.5'
-        201264:
-            host_reqs: 'hostname=dell-per440-03.lab.eng.pek2.redhat.com'
-            cmd_base1: 'python XMLParsing.py -p 2012 -a 64 -c 192.168.0.5'
-            cmd_base2: 'None'
-        2012R2-W10D32:
-            host_reqs: 'hostname=dell-per440-04.lab.eng.pek2.redhat.com'
-            cmd_base1: 'python XMLParsing.py -p 2012 -a R2 -c 192.168.0.5'
-            cmd_base2: 'python XMLParsing.py -p W10D -a 32 -c 192.168.0.157'
-        W10S-W10D64:
-            host_reqs: 'hostname=dell-per440-05.lab.eng.pek2.redhat.com'
-            cmd_base1: 'python XMLParsing.py -p W10S -a 64 -c 192.168.0.3'
-            cmd_base2: 'python XMLParsing.py -p W10D -a 64 -c 192.168.0.157'
