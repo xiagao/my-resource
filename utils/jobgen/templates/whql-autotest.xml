@@ -1,0 +1,44 @@
+<job retention_tag="scratch">
+    <whiteboard>
+        <REPLACE_ME function="get_whiteboard"/>
+    </whiteboard>
+    <recipeSet priority="High">
+        <recipe kernel_options="" kernel_options_post="" ks_meta="" role="RECIPE_MEMBERS" whiteboard="">
+            <autopick random="false"/>
+            <watchdog panic="ignore"/>
+            <partitions/>
+            <REPLACE_ME function="get_repos"/>
+            <REPLACE_ME function="get_packages"/>
+            <ks_appends>
+                <ks_append>
+                    <REPLACE_ME function="get_ks_append"/>
+                </ks_append>
+            </ks_appends>
+            <distroRequires>
+                <REPLACE_ME function="get_distro_reqs"/>
+            </distroRequires>
+            <hostRequires>
+                <REPLACE_ME function="get_host_reqs"/>
+            </hostRequires>
+            <task name="/distribution/install" role="STANDALONE"/>
+            <task name="/distribution/command" role="STANDALONE">
+                <params>
+                    <param name="CMDS_TO_RUN" value="yum update -y --skip-broken || exit 0"/>
+                </params>
+            </task>
+            <REPLACE_ME function="install_qemu"/>
+            <task name="/distribution/command" role="STANDALONE">
+                <params>
+                    <param name="CMDS_TO_RUN" value="yum install -y libvirt libguestfs libguestfs-tools libguestfs-winsupport python-libguestfs"/>
+                </params>
+            </task>
+            <task name="/distribution/utils/reboot" role="STANDALONE"/>
+            <task name="/virt/virtio-win/Durations/autotest-whql" role="STANDALONE">
+                <params>
+                    <REPLACE_ME function="get_staf_cmd"/>
+                </params>
+            </task>
+            <REPLACE_ME function="reservesys"/>
+        </recipe>
+    </recipeSet>
+</job>

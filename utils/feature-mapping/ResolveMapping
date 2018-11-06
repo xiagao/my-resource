@@ -1,0 +1,139 @@
+#!/usr/bin/env python
+import argparse
+import csv
+import os
+import sys
+
+import openpyxl
+
+home_dir = os.path.expanduser('~')
+buffer_path = os.path.join(home_dir, 'mappingtable/MappingTable.xlsx')
+base_dir = os.path.dirname(os.path.abspath(__file__))
+base_path = os.path.join(base_dir, 'MappingTable.xlsx')
+DB_PATH = buffer_path if os.path.exists(buffer_path) else base_path
+
+ARCHMASK = {'x86_64': 0x1, 'ppc64le': 0x2, 'aarch64': 0x4}
+
+def get_cargs(pairs):
+    cargs = dict()
+
+    for pair in pairs:
+        key, val = pair.split('=', 1)
+        cargs[str(key)]=str(val)
+
+    return cargs
+
+def build_mapping_db():
+    global DB_PATH
+    db = dict()
+
+    db_file = openpyxl.load_workbook(DB_PATH, read_only=True)
+    for shname in db_file.get_sheet_names():
+        for row in db_file[shname].rows:
+            index = str(row[0].value).strip()
+            if not index:
+                continue
+            amask = int(row[1].value or 0)
+            cargs = dict(category=str(shname))
+            cargs.update(get_cargs([c.value for c in row[2:] if c.value]))
+            if db.has_key(index):
+                db[index][1].update(cargs)
+            else:
+                db[index] = (amask, cargs)
+
+    return db
+
+def gen_cmd(args, def_params={}):
+    defs = def_params.copy()
+
+    defs.update(args)
+    content = ['--{0}={1}'.format(key, val) for key, val in defs.items()]
+
+    return ' '.join(['python', 'ConfigTest.py'] + content)
+
+def gen_jobs(db, flist, arch, def_params={}):
+    job_dict = dict()
+
+    for fpath in flist:
+        attrs = db.get(fpath)
+        if not attrs:
+            continue
+        if not (attrs[0] & arch):
+            continue
+
+        cmd = gen_cmd(attrs[1], def_params)
+        if cmd not in job_dict:
+            job_dict[cmd] = list()
+        job_dict[cmd].append(fpath)
+
+    return job_dict
+
+def output_jobs(job_dict, out_file):
+    writer = csv.writer(out_file, delimiter='\t')
+
+    for job_cmd, file_list in job_dict.items():
+        writer.writerow([job_cmd, str(file_list)])
+
+class ArchAction(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        global ARCHMASK
+        setattr(namespace, self.dest, ARCHMASK[values])
+
+def parse_opts():
+    global ARCHMASK
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'paths',
+        metavar='PATH',
+        nargs='*',
+        help='path of qemu source files'
+    )
+    parser.add_argument(
+        '-f', '--file',
+        metavar='PATH',
+        type=argparse.FileType('r', 0),
+        help='path of the list file'
+    )
+    parser.add_argument(
+        '-o', '--out-file',
+        metavar='PATH',
+        dest='out_file',
+        default=sys.stdout,
+        type=argparse.FileType('a+'),
+        help='path of output file'
+    )
+    parser.add_argument(
+        '-a', '--arch',
+        default='x86_64',
+        action=ArchAction,
+        choices=ARCHMASK.keys(),
+        required=True,
+        help='architecture'
+    )
+    parser.add_argument(
+        '--default-params',
+        metavar='PARAM',
+        dest='def_params',
+        nargs='*',
+        default=[],
+        help='default parameters'
+    )
+    return vars(parser.parse_args())
+
+def main():
+    opts = parse_opts()
+    inputs = opts['paths']
+    if opts['file']:
+        inputs += opts['file'].read().splitlines()
+    if not inputs:
+        inputs += sys.stdin.read().splitlines()
+    jobs = gen_jobs(
+        build_mapping_db(),
+        inputs,
+        opts['arch'],
+        get_cargs(opts['def_params'])
+    )
+    output_jobs(jobs, opts['out_file'])
+
+if __name__ == '__main__':
+    main()

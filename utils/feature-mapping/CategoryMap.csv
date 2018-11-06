@@ -1,0 +1,17 @@
+category,configs,owners,feature,host_req
+virtual_nic_device,{platform: x86_64},"xiywang@redhat.com, pezhang@redhat.com, chayang@redhat.com",virtual_network,"min-cores-8"
+virtual_nic_device,"{platform: 'ppc64le,ppc64'}","yhong@redhat.com, qzhang@redhat.com",virutal_network
+virtual_block_device,"{platform: x86_64, driveformat: ide}","aliang@redhat.com, coli@redhat.com, chayang@redhat.com, michen@redhat.com",ide,"min-disk-150g"
+virtual_block_device,"{platform: x86_64, driveformat: virtio_blk}","aliang@redhat.com, coli@redhat.com, chayang@redhat.com, michen@redhat.com",virtio_blk,"min-disk-150g"
+virtual_block_device,"{platform: x86_64, driveformat: virtio_scsi}","xuwei@redhat.com, coli@redhat.com, chayang@redhat.com, michen@redhat.com",virtio_scsi,"min-disk-150g"
+virtual_block_device,"{platform: 'ppc64le,ppc64'}","yhong@redhat.com, coli@redhat.com, qzhang@redhat.com",virtual_block,"min-disk-150g"
+guest_agent,{platform: x86_64},"xfu@redhat.com, chayang@redhat.com",virtagent
+guest_agent,"{platform: 'ppc64le,ppc64'}","mdeng@redhat.com, qzhang@redhat.com",virtagent
+mem_balloon,{platform: x86_64},"yuhuang@redhat.com, jinzhao@redhat.com, chayang@redhat.com",memory_balloon
+mem_balloon,"{platform: 'ppc64le,ppc64'}","mdeng@redhat.com, qzhang@redhat.com",memory_balloon
+mem_hotplug,{platform: x86_64},"yuhuang@redhat.com, jinzhao@redhat.com, chayang@redhat.com",memory_hotplug
+mem_hotplug,"{platform: 'ppc64le,ppc64'}","mdeng@redhat.com, qzhang@redhat.com",memory_hotplug
+qcow2,{platform: x86_64},"pingl@redhat.com, ngu@redhat.com, coli@redhat.com, chayang@redhat.com, michen@redhat.com",qcow2
+qcow2,"{platform: 'ppc64le,ppc64'}","xuma@redhat.com, coli@redhat.com, qzhang@redhat.com",qcow2
+storage_vm_migration,{platform: x86_64},"qizhu@redhat.com, xfu@redhat.com, chayang@redhat.com",storage_vm_migration
+storage_vm_migration,"{platform: 'ppc64le,ppc64'}","qizhu@redhat.com, xfu@redhat.com, qzhang@redhat.com",storage_vm_migration

@@ -1,0 +1,119 @@
+#!/usr/bin/env python
+'''
+The client tool for GIM
+'''
+import re
+import json
+import logging
+import time
+import urllib2
+
+from argparse import ArgumentParser
+
+
+class GIMClient(object):
+
+    def __init__(self, host, port):
+        self.top_url = 'http://' + ':'.join([str(host), str(port)])
+
+    def ping(self):
+        urllib2.urlopen('/'.join([self.top_url, '']))
+
+    def has_task(self, compose_id, arch, variant):
+        url = '/'.join([self.top_url, 'gim', 'info', 'task?'])
+        url += ('compose_id=' + compose_id +
+                '&arch=' + arch +
+                "&variant=" + variant)
+
+        msg = json.loads(urllib2.urlopen(url).read())
+        try:
+            return bool(msg['return'])
+        except KeyError:
+            raise Exception(msg['error'])
+
+    def need_to_update(self, compose_id, arch, variant):
+        url = '/'.join([self.top_url, 'gim', 'info', 'symlink?'])
+        url += ('compose_id=' + compose_id +
+                '&arch=' + arch +
+                "&variant=" + variant)
+
+        msg = json.loads(urllib2.urlopen(url).read())
+        try:
+            return bool(msg['return'])
+        except KeyError:
+            raise Exception(msg['error'])
+
+    def submit_task(self, compose_id, arch, variant):
+        url = '/'.join([self.top_url, 'gim', 'update?'])
+        url += ('compose_id=' + compose_id +
+                '&arch=' + arch +
+                "&variant=" + variant)
+
+        msg = json.loads(urllib2.urlopen(url).read())
+        try:
+            return bool(msg['return'])
+        except KeyError:
+            raise Exception(msg['error'])
+
+    def read_log(self):
+        return urllib2.urlopen('/'.join([self.top_url, 'gim', 'log'])).read()
+
+
+def parse_opts():
+    parser = ArgumentParser()
+    parser.add_argument('-A', '--arches', required=True,
+                        help='Arch list seperated by comma')
+    parser.add_argument('-c', '--compose-id', required=True,
+                        help='Compose ID')
+    parser.add_argument('-H', '--host', required=True,
+                        help='Host name or ip address')
+    parser.add_argument('-p', '--port', dest='port', type=int,
+                        help='Port number', default=8000)
+    return vars(parser.parse_args())
+
+
+if __name__ == '__main__':
+    opts = parse_opts()
+    logging.basicConfig(
+        level=logging.INFO,
+        format='[{0}:{1}] %(message)s'.format(opts['host'], opts['port'])
+    )
+
+    gclient = GIMClient(opts['host'], opts['port'])
+    try:
+        gclient.ping()
+    except Exception as e:
+        logging.error(str(e))
+        exit(1)
+
+    compose_id = opts['compose_id']
+    # Variant name has been changed to 'BaseOS' started from RHEL-8
+    variant = "BaseOS"
+    try :
+        major_release = re.search(r"(\d+)\.?\d*", compose_id).group(1)
+    except AttributeError as e:
+        logging.error(str(e))
+        exit(1)
+    if int(major_release) < 8:
+        variant = "Server"
+    arches = [a.strip() for a in opts['arches'].split(',')]
+    for arch in arches:
+        try:
+            logging.info("Check status of compose '{0}-{1}'".format(
+                compose_id, arch))
+            if gclient.submit_task(compose_id, arch, variant):
+                logging.info('Submitted a new task to update the compose')
+
+            while gclient.has_task(compose_id, arch, variant):
+                logging.info("Waiting task to finish..")
+                time.sleep(120)
+
+            if gclient.need_to_update(compose_id, arch, variant):
+                raise Exception("Failed to update '{0}-{1}'".format(
+                    compose_id, arch))
+
+            logging.info("Guest ISO is updated to '{0}-{1}'".format(
+                compose_id, arch))
+        except Exception as e:
+            logging.error(str(e))
+            exit(1)

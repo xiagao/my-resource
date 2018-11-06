@@ -1,0 +1,15 @@
+[gim]
+; URL path of the server which provides compose tree of the ISO image
+top_url =
+; Path of the directory to keep your ISO images
+isos_dir =
+; Whether keep the old ISO images
+keep_old = no
+; Whether use nightly build firstly. If 'yes', allows replacing the old
+; regular ISO image with the given nightly build
+nightly_first = no
+
+[httpd]
+; Please set the value to '127.0.0.1' if just setup service on localhost
+host = 0.0.0.0
+port = 8000

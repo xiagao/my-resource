@@ -1,0 +1,30 @@
+trigger:
+    email_recipients: 'xiagao@redhat.com, lijin@redhat.com'
+    osversion:
+        el7:
+            major: '7'
+    windows_group: 'win7-win2k8-32 win2k8-win2k8r2-64 win8-win10-32 win2k12r2-win2k16-64'
+
+runtest:
+    email_recipients: 'xiagao@redhat.com, lijin@redhat.com, wyu@redhat.com, phou@redhat.com, yuhu@redhat.com, platform-ci-notification@redhat.com'
+    bootstrap_params: '--stable --verbose'
+    reserve_time: '72'
+    job_owner: 'wyu'
+    component:
+        virtio-win-prewhql
+        virtio-win
+    ks_file: ''
+    xml_file: '$WORKSPACE/kvmqe-ci/utils/jobgen/templates/avocado.xml'
+    windows_group:
+        win7-win2k8-32:
+            staf_cmd: 'python ConfigTest.py --category=virtio_win_acceptance --guestname=Win7,Win2008 --platform=i386 --driveformat=virtio_scsi --clone=yes --rng_type=no_virtio_rng,virtio_rng'
+            host_reqs: 'key_value.CPUFLAGS=vmx,key_value.DISKSPACE>=102400,memory>=8192,key_value.PROCESSORS>=8,hostlabcontroller=lab-01.rhts.eng.pek2.redhat.com'
+        win2k8-win2k8r2-64:
+            staf_cmd: 'python ConfigTest.py --category=virtio_win_acceptance --guestname=Win2008,Win2008..r2 --platform=x86_64 --driveformat=virtio_scsi --clone=yes --rng_type=no_virtio_rng,virtio_rng'
+            host_reqs: 'key_value.CPUFLAGS=svm,key_value.DISKSPACE>=102400,memory>=8192,key_value.PROCESSORS>=8,hostlabcontroller=lab-01.rhts.eng.pek2.redhat.com'
+        win8-win10-32:
+            staf_cmd: 'python ConfigTest.py --category=virtio_win_acceptance --guestname=Win8..1,Win10 --platform=i386 --clone=yes --rng_type=no_virtio_rng,virtio_rng'
+            host_reqs: 'key_value.CPUFLAGS=vmx,key_value.DISKSPACE>=102400,memory>=8192,key_value.PROCESSORS>=8,hostlabcontroller=lab-01.rhts.eng.pek2.redhat.com'
+        win2k12r2-win2k16-64:
+            staf_cmd: 'python ConfigTest.py --category=virtio_win_acceptance --guestname=Win2012..r2,Win2016 --platform=x86_64 --clone=yes --rng_type=no_virtio_rng,virtio_rng'
+            host_reqs: 'key_value.CPUFLAGS=svm,key_value.DISKSPACE>=102400,memory>=8192,key_value.PROCESSORS>=8,hostlabcontroller=lab-01.rhts.eng.pek2.redhat.com'

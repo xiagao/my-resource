@@ -1,0 +1,98 @@
+- job-template:
+    description: |
+        This is a workaround. Will be removed Once the ticket JENKINS-48087 is fixed.`
+    name: 'virt-kvm-pipeline-urltrigger-workaround-{osversion}'
+    node: 'jslave-virt-kvm-x86'
+    triggers:
+        - pollurl:
+            cron: 'H/9 * * * *'
+            urls:
+              - url: http://download-node-02.eng.bos.redhat.com/rel-eng/latest-RHEL-{major}/COMPOSE_ID
+                check-content:
+                  - simple: true
+    builders:
+        - trigger-builds:
+            - project: 'virt-kvm-pipeline-{osversion}-compose-testing-trigger'
+    publishers:
+        - email-ext:
+            recipients: 'pingl@redhat.com, yhong@redhat.com'
+            failure: true
+
+- job-template:
+    description: |
+        Managed by Jenkins Job Builder. Do not edit via web.`
+    name: 'virt-kvm-pipeline-{osversion}-compose-testing-trigger'
+    project-type: pipeline
+    concurrent: false
+    triggers:
+        - pollurl:
+            cron: 'H/9 * * * *'
+            urls:
+              - url: http://download-node-02.eng.bos.redhat.com/rel-eng/latest-RHEL-{major}/COMPOSE_ID
+                check-content:
+                  - simple: true
+    parameters:
+        - string:
+            name: COMPOSE_ID
+            default: ''
+            description: 'Compose id (e.g. RHEL-7.5-20180322.0)'
+        - string:
+            name: HARDWARES
+            default: ''
+            description: 'Comma separated list of hardware where the test runs on (support {hardwares})'
+        - hidden:
+            name: OSVERSION
+            default: '{osversion}'
+            description: 'Major version of the OS'
+    dsl:
+        !include-raw-escape: jobs/compose/scripts/trigger.groovy
+
+
+- job-template:
+    description: |
+        Managed by Jenkins Job Builder. Do not edit via web.`
+    name: 'virt-kvm-pipeline-{osversion}-update-iso-images-{lab}'
+    project-type: pipeline
+    concurrent: false
+    parameters:
+        - string:
+            name: COMPOSE_ID
+            default: ''
+            description: 'Compose id (e.g. RHEL-7.5-20180322.0)'
+        - hidden:
+            name: LAB
+            default: '{lab}'
+            description: 'Labrary which is used to store iso images'
+        - hidden:
+            name: OSVERSION
+            default: '{osversion}'
+            description: 'Major version of the OS'
+    dsl:
+        !include-raw-escape: jobs/compose/scripts/iso.groovy
+
+
+- job-template:
+    description: |
+        Managed by Jenkins Job Builder. Do not edit via web.`
+    name: 'virt-kvm-pipeline-{osversion}-{hardware}-{test_type}-runtest'
+    project-type: pipeline
+    concurrent: true
+    parameters:
+        - string:
+            name: COMPOSE_ID
+            default: ''
+            description: 'Compose id (e.g. RHEL-7.5-20180322.0)'
+        - hidden:
+            name: OSVERSION
+            default: '{osversion}'
+            description: 'Major version of the OS'
+        - hidden:
+            name: HARDWARE
+            default: '{hardware}'
+            description: 'hardware where the test runs on (support {hardware})'
+        - hidden:
+            name: TEST_TYPE
+            default: '{test_type}'
+            description: 'Test type for compose testing(support {test_type})'
+    dsl:
+        !include-raw-escape: '{script_path}'
