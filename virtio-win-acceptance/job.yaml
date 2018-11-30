@@ -1,0 +1,61 @@
+- job-template:
+    description: |
+        Managed by Jenkins Job Builder. Do not edit via web.
+    name: 'pipeline-{component}-{osversion}-trigger'
+    project-type: pipeline
+    concurrent: true
+    parameters:
+        - string:
+            name: 'BREW_NVR'
+            default: ''
+            description: "NVR of the brew build (e.g. {{component}}-{{version}}-{{release}},if trigger virtio-win-prewhql test, can use like virtio-win-prewhql-0.1-142 ;else if trigger virtio-win test, use like virtio-win-1.9.3-1.el7 )"
+        - hidden:
+            name: OSVERSION
+            default: '{osversion}'
+            description: 'Major version of the OS'
+        - hidden:
+            name: COMPONENT
+            default: '{component}'
+            description: 'Tested component for downstream QEMU'
+        - hidden:
+            name: CI_MESSAGE
+            default: ''
+            description: "Used to inject the message's body in case the UMB trigger is enabled"
+    triggers:
+        - ci-trigger:
+            provider-name: "Red Hat UMB"
+            override-topic: "Consumer.rh-jenkins-ci-plugin.kvm-ci-{component}-{osversion}.VirtualTopic.qe.ci.>"
+            jms-selector: "CI_TYPE = 'brew-tag' AND name = '{component}' AND release LIKE '{rel_pattern}'"
+    dsl:
+        !include-raw-escape: jobs/virtio-win-acceptance/scripts/trigger.groovy
+
+
+- job-template:
+    description: |
+        Managed by Jenkins Job Builder. Do not edit via web.
+    name: 'pipeline-{component}-{osversion}-{windows_group}-runtest'
+    project-type: pipeline
+    concurrent: true
+    parameters:
+        - string:
+            name: 'BREW_NVR'
+            default: ''
+            description: "NVR of the brew build (e.g. {{component}}-{{version}}-{{release}},if trigger virtio-win-prewhql test, can use like virtio-win-prewhql-0.1-142 ;else if trigger virtio-win test, use like virtio-win-1.9.3-1.el7 )"
+        - string:
+            name: 'QEMU_BREW_NVR'
+            default: ''
+            description: "QEMU NVR of the brew build  )"
+        - string:
+            name: 'QEMU_BREW_TAG'
+            default: ''
+            description: "QEMU TAG of the brew build )"
+        - hidden:
+            name: OSVERSION
+            default: '{osversion}'
+            description: 'Major version of the OS'
+        - hidden:
+            name: WINDOWS_GROUP
+            default: '{windows_group}'
+            description: 'Tested windows group for downstream QEMU'
+    dsl:
+        !include-raw-escape: jobs/virtio-win-acceptance/scripts/runtest.groovy
