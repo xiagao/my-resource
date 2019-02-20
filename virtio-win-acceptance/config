@@ -1,0 +1,63 @@
+trigger:
+    email_recipients: 'xiagao@redhat.com, lijin@redhat.com'
+    osversion:
+        el7:
+            major: '7'
+            module_stream: 'legacy'
+        el8:
+            major: '8'
+            module_stream: 'fast-train slow-train'
+    windows_group: 'win7-win2k8-32 win2k8-win2k8r2-64 win8-win10-32 win2k12r2-win2k16-64 win2k19-64'
+
+runtest:
+    email_recipients: 'xiagao@redhat.com, lijin@redhat.com, wyu@redhat.com, phou@redhat.com,platform-ci-notification@redhat.com'
+    reserve_time: '72'
+    job_owner: 'wyu'
+    component:
+        virtio-win-prewhql
+        virtio-win
+    windows_group:
+        win7-win2k8-32:
+            el7:
+                kar_cmd: 'python ConfigTest.py --category=virtio_win_acceptance --guestname=Win7,Win2008 --platform=i386 --driveformat=virtio_blk --clone=yes --rng_type=no_virtio_rng,virtio_rng'
+            el8:
+                kar_cmd: 'python3 ConfigTest.py --category=virtio_win_acceptance --guestname=Win7,Win2008 --platform=i386 --driveformat=virtio_blk --clone=yes --rng_type=no_virtio_rng,virtio_rng --machines=q35'
+            hardware: 'x86_64-intel'
+        win2k8-win2k8r2-64:
+            el7:
+                kar_cmd: 'python ConfigTest.py --category=virtio_win_acceptance --guestname=Win2008,Win2008..r2 --platform=x86_64 --clone=yes --rng_type=no_virtio_rng,virtio_rng'
+            el8:
+                kar_cmd: 'python3 ConfigTest.py --category=virtio_win_acceptance --guestname=Win2008,Win2008..r2 --platform=x86_64 --clone=yes --rng_type=no_virtio_rng,virtio_rng --machines=q35'
+            hardware: 'x86_64-amd'
+        win8-win10-32:
+            el7:
+                kar_cmd: 'python ConfigTest.py --category=virtio_win_acceptance --guestname=Win8..0,Win10 --platform=i386 --driveformat=virtio_blk --clone=yes --rng_type=no_virtio_rng,virtio_rng'
+            el8:
+                kar_cmd: 'python3 ConfigTest.py --category=virtio_win_acceptance --guestname=Win8..0,Win10 --platform=i386 --driveformat=virtio_blk --clone=yes --rng_type=no_virtio_rng,virtio_rng --machines=q35'
+            hardware: 'x86_64-intel'
+        win2k12r2-win2k16-64:
+            el7:
+                kar_cmd: 'python ConfigTest.py --category=virtio_win_acceptance --guestname=Win2012..r2,Win2016 --platform=x86_64 --clone=yes --rng_type=no_virtio_rng,virtio_rng'
+            el8:
+                kar_cmd: 'python3 ConfigTest.py --category=virtio_win_acceptance --guestname=Win2012..r2,Win2016 --platform=x86_64 --clone=yes --rng_type=no_virtio_rng,virtio_rng --machines=q35'
+            hardware: 'x86_64-amd'
+        win2k19-64:
+            el7:
+                kar_cmd: 'python ConfigTest.py --category=virtio_win_acceptance --guestname=Win2019 --platform=x86_64 --driveformat=virtio_blk --clone=yes --rng_type=no_virtio_rng,virtio_rng'
+            el8:
+                kar_cmd: 'python3 ConfigTest.py --category=virtio_win_acceptance --guestname=Win2019 --platform=x86_64 --driveformat=virtio_blk --clone=yes --rng_type=no_virtio_rng,virtio_rng --machines=q35'
+            hardware: 'x86_64-intel'
+        win2k19-win10:
+            el8:
+                kar_cmd: 'python3 ConfigTest.py --category=virtio_win_acceptance --guestname=Win2019,Win10 --clone=yes --rng_type=no_virtio_rng,virtio_rng --machines=q35'
+            hardware: 'x86_64-amd'
+    module_stream:
+        fast-train:
+            install_params: '--install-virtqemu virt:${{COMPOSE_VERSION}}.0 --verbose'
+            repo: 'http://download-node-02.eng.bos.redhat.com/rhel-${{MAJOR_VERSION}}/rel-eng/ADVANCED-VIRT-${{MAJOR_VERSION}}/latest-ADVANCED-VIRT-${{MAJOR_VERSION}}-RHEL-${{MAJOR_VERSION}}/compose/Advanced-virt/$basearch/os,http://download-node-02.eng.bos.redhat.com/rhel-${{MAJOR_VERSION}}/rel-eng/ADVANCED-VIRT-${{MAJOR_VERSION}}/latest-ADVANCED-VIRT-${{MAJOR_VERSION}}-RHEL-${{MAJOR_VERSION}}/compose/Advanced-virt/$basearch/debug/tree'
+        slow-train:
+            install_params: '--install-module virt:rhel --install-repopkg qemu-kvm-debuginfo --verbose'
+            repo: ''
+        legacy:
+            install_params: 'qemu-kvm-rhev@rhevh-rhel-${{COMPOSE_VERSION}}-candidate'
+            repo: ''

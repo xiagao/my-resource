@@ -1,0 +1,63 @@
+- project:
+    name: 'acceptance-virtio-win'
+    jobs:
+        - 'trigger'
+        - 'runtest_module-fast-train-legacy'
+        - 'runtest_module-slow-train'
+
+- job-group:
+    name: 'trigger'
+    jobs:
+        - 'pipeline-{component}-{osversion}-trigger'
+    osversion:
+        - 'el7':
+            rel_pattern: '%.el7'
+        - 'el8':
+            rel_pattern: '%.el8'
+    component:
+        - 'virtio-win-prewhql':
+            rel_pattern: '%'
+            uuid: '96aea109-2348-3630-9f1f-f60c8f877bcf'
+        - 'virtio-win':
+            uuid: '30bf4773-f91c-355a-aaa8-ced99dcf9d11'
+    exclude:
+        - component: 'virtio-win-prewhql'
+          osversion: 'el7'
+
+
+- job-group:
+    name: 'runtest_module-fast-train-legacy'
+    jobs:
+        - 'pipeline-{component}-{osversion}-{module_stream}-{windows_group}-runtest'
+    job_owner: 'wyu'
+    windows_group:
+        - 'win7-win2k8-32'
+        - 'win2k8-win2k8r2-64'
+        - 'win8-win10-32'
+        - 'win2k12r2-win2k16-64'
+        - 'win2k19-64'
+    component:
+        - 'virtio-win-prewhql'
+        - 'virtio-win'
+    osversion:
+        - 'el7':
+            module_stream: 'legacy'
+        - 'el8':
+            module_stream: 'fast-train'
+    exclude:
+        - component: 'virtio-win-prewhql'
+          osversion: 'el7'
+
+- job-group:
+    name: 'runtest_module-slow-train'
+    jobs:
+        - 'pipeline-{component}-{osversion}-{module_stream}-{windows_group}-runtest'
+    job_owner: 'wyu'
+    windows_group:
+        - 'win2k19-win10'
+    component:
+        - 'virtio-win-prewhql'
+        - 'virtio-win'
+    osversion:
+        - 'el8':
+            module_stream: 'slow-train'
