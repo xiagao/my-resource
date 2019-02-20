@@ -16,6 +16,8 @@ pipeline {
     environment {
         GERRIT_URL = 'https://code.engineering.redhat.com/gerrit'
         YAML_CONFIG = 'kvmqe-ci/jobs/virtio-win-acceptance/config'
+        HUB_URL = 'https://beaker.engineering.redhat.com'
+        LAB_CONTROLLER = 'lab-01.rhts.eng.pek2.redhat.com'
         JOB_GROUP = 'trigger'
     }
 
@@ -48,9 +50,12 @@ pipeline {
                     logging.info("Parse variables values from Yaml")
                     datas = readYaml file: env.YAML_CONFIG
                     env.EMAIL_RECIPIENTS = datas.get(env.JOB_GROUP).get("email_recipients")
-                    env.SUPPORTED_WIN_GROUP = datas.get(env.JOB_GROUP).get("windows_group")
                     env.MAJOR = datas.get(env.JOB_GROUP).get("osversion").get(params.OSVERSION).get("major")
                     env.MODULE_STREAM = datas.get(env.JOB_GROUP).get("osversion").get(params.OSVERSION).get("module_stream")
+                    env.SUPPORTED_WIN_GROUP = datas.get(env.JOB_GROUP).get("windows_group")
+                    if (env.MODULE_STREAM == "fast-train"){
+                        env.SUPPORTED_WIN_GROUP = datas.get(env.JOB_GROUP).get("windows_group_fast_train")
+                    }
                 }
             }
         }//end stage
@@ -133,8 +138,8 @@ pipeline {
                     // get the distro_version, such as 7.6, 8.0.0
                     distro_version = composeID_url.split('-')[1]
                     // get the latest distro name of beaker via distro version
-                    composeID = component.getComposeID(distro_version, params.OSVERSION, true )
-                    if (!env.COMPOSE_ID) {
+                    composeID = component.getComposeID(distro_version, params.OSVERSION, true)
+                    if (!composeID) {
                         logging.error("Failed to get Compose ID")
                     }
                     logging.info("The compose id is ${composeID}.")

@@ -56,7 +56,7 @@ pipeline {
                     env.RESERVE_TIME = datas.get(env.JOB_GROUP).get("reserve_time")
                     env.JOB_OWNER = datas.get(env.JOB_GROUP).get("job_owner")
 
-                    env.KAR_CMD = datas.get(env.JOB_GROUP).get("windows_group").get(params.WINDOWS_GROUP).get("kar_cmd")
+                    env.KAR_CMD = datas.get(env.JOB_GROUP).get("windows_group").get(params.WINDOWS_GROUP).get(params.OSVERSION).get("kar_cmd")
                     env.KAR_CMD += " --customsparams=\"cdrom_virtio = isos/windows/${params.BREW_NVR}.iso\""
 
                     env.WHITEBOARD = "Acceptance testing (${params.BREW_NVR} - ${params.WINDOWS_GROUP} - ${params.OSVERSION} - ${params.MODULE_STREAM})"
@@ -81,7 +81,6 @@ pipeline {
                     if (env.RESERVE_TIME) {
                         cmdGen += " --reserve-time '${env.RESERVE_TIME}'"
                     }
-                    cmdGen += " --save-xml '${env.OUT_FILE}'"
                 }
             }
         }//end stage

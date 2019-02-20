@@ -32,10 +32,6 @@
     job_owner: 'wyu'
     windows_group:
         - 'win7-win2k8-32'
-        - 'win2k8-win2k8r2-64'
-        - 'win8-win10-32'
-        - 'win2k12r2-win2k16-64'
-        - 'win2k19-64'
     component:
         - 'virtio-win-prewhql'
         - 'virtio-win'

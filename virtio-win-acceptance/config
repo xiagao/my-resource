@@ -7,7 +7,8 @@ trigger:
         el8:
             major: '8'
             module_stream: 'fast-train slow-train'
-    windows_group: 'win7-win2k8-32 win2k8-win2k8r2-64 win8-win10-32 win2k12r2-win2k16-64 win2k19-64'
+    windows_group: 'win7-win2k8-32'
+    windows_group_fast_train: 'win2k19-win10'
 
 runtest:
     email_recipients: 'xiagao@redhat.com, lijin@redhat.com, wyu@redhat.com, phou@redhat.com,platform-ci-notification@redhat.com'
