@@ -15,7 +15,7 @@ pipeline {
     environment {
         GERRIT_URL = 'https://code.engineering.redhat.com/gerrit'
         ARCH = 'x86_64'
-        YAML_CONFIG = 'kvmqe-ci/jobs/virtio-win-acceptance/config'
+        YAML_CONFIG = 'my-resource/virtio-win-acceptance/config'
         JOB_GROUP = 'runtest'
         HUB_URL = 'https://beaker.engineering.redhat.com'
         LAB_CONTROLLER = 'lab-01.rhts.eng.pek2.redhat.com'
@@ -39,8 +39,8 @@ pipeline {
                 checkout(
                     [$class: 'GitSCM', branches: [[name: '*/master']],
                       extensions: [[$class: 'RelativeTargetDirectory',
-                        relativeTargetDir: 'kvmqe-ci']],
-                      userRemoteConfigs: [[url: "${GERRIT_URL}/kvmqe-ci.git"]]
+                        relativeTargetDir: 'my-resource']],
+                      userRemoteConfigs: [[url: "https://github.com/xiagao/my-resource"]]
                     ]
                 )
             }

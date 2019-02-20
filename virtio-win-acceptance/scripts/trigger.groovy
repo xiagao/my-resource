@@ -15,7 +15,7 @@ pipeline {
 
     environment {
         GERRIT_URL = 'https://code.engineering.redhat.com/gerrit'
-        YAML_CONFIG = 'kvmqe-ci/jobs/virtio-win-acceptance/config'
+        YAML_CONFIG = 'my-resource/virtio-win-acceptance/config'
         HUB_URL = 'https://beaker.engineering.redhat.com'
         LAB_CONTROLLER = 'lab-01.rhts.eng.pek2.redhat.com'
         JOB_GROUP = 'trigger'
@@ -37,8 +37,8 @@ pipeline {
                 checkout(
                     [$class: 'GitSCM', branches: [[name: '*/master']],
                       extensions: [[$class: 'RelativeTargetDirectory',
-                        relativeTargetDir: 'kvmqe-ci']],
-                      userRemoteConfigs: [[url: "${GERRIT_URL}/kvmqe-ci.git"]]
+                        relativeTargetDir: 'my-resource']],
+                      userRemoteConfigs: [[url: "https://github.com/xiagao/my-resource"]]
                     ]
                 )
             }
@@ -159,7 +159,7 @@ pipeline {
                         branches["branch${i}"] = {
                             build job: "${jobsList[index]}", parameters: [
                                 string(name: 'BREW_NVR', value: "${brewNvr}"),
-                                sstring(name: 'COMPOSE_ID', value: "${composeID}")],
+                                string(name: 'COMPOSE_ID', value: "${composeID}")],
                             quietPeriod: 2, propagate: false, wait: false
                         }
                     }
