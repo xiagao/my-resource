@@ -53,9 +53,7 @@ pipeline {
                     env.MAJOR = datas.get(env.JOB_GROUP).get("osversion").get(params.OSVERSION).get("major")
                     env.MODULE_STREAM = datas.get(env.JOB_GROUP).get("osversion").get(params.OSVERSION).get("module_stream")
                     env.SUPPORTED_WIN_GROUP = datas.get(env.JOB_GROUP).get("windows_group")
-                    if (env.MODULE_STREAM == "fast-train"){
-                        env.SUPPORTED_WIN_GROUP = datas.get(env.JOB_GROUP).get("windows_group_fast_train")
-                    }
+                    env.SUPPORTED_WIN_GROUP_SLOW = datas.get(env.JOB_GROUP).get("windows_group_slow_train")
                 }
             }
         }//end stage
@@ -99,10 +97,17 @@ pipeline {
                 always {
                     script {
                         currentBuild.displayName = brewNvr
-                        for (wg in env.SUPPORTED_WIN_GROUP.split()) {
-                            for (ms in env.MODULE_STREAM.split()) {
-                                jobsList.add("pipeline-${params.COMPONENT}-${params.OSVERSION}-${ms}-${wg}-runtest")
+                        for (ms in env.MODULE_STREAM.split()) {
+                            if (ms == "fast-train" || ms == "legacy") {
+                                 for (wg in env.SUPPORTED_WIN_GROUP.split()) {
+                                     jobsList.add("pipeline-${params.COMPONENT}-${params.OSVERSION}-${ms}-${wg}-runtest")
+                                 }
                             }
+                            if (ms == "slow-train") {
+                                 for (wg in env.SUPPORTED_WIN_GROUP_SLOW.split()) {
+                                     jobsList.add("pipeline-${params.COMPONENT}-${params.OSVERSION}-${ms}-${wg}-runtest")
+                                 }
+                            }  
                         }
                     }
                 }

@@ -89,7 +89,7 @@ pipeline {
             steps {
                 script {
                     logging.info("Run tests")
-                    ws("${env.WORKSPACE}/kvmqe-ci/utils/beaker-workflow") {
+                    ws("${env.WORKSPACE}/my-resource/beaker-workflow") {
                         if (sh(returnStatus: true, script: "${cmdGen}") != 0) {
                             logging.error("Failed to generate beaker job")
                         }
