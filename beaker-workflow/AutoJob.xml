@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<jobConfig>
+  <name>KVM QE Beaker Automation Workflow</name>
+  <xslt>Avocado.xsl</xslt>
+  <arguments>
+    <arg section="recipe" type="string">
+      <name>arch</name>
+      <metavar>ARCH</metavar>
+      <tag type="attribute" attrname="arch">machine</tag>
+      <description>Architecture</description>
+    </arg>
+    <arg section="recipe" type="string">
+      <name>distro</name>
+      <metavar>DISTRO</metavar>
+      <tag type="attribute" attrname="distro">machine</tag>
+      <description>Distro id</description>
+    </arg>
+    <arg section="recipe" type="string" optional="1">
+      <name>host-filters</name>
+      <metavar>[intel|amd|power8|power9|pek|bos|min-mem-8g|min-mem-64g|min-disk-256g]</metavar>
+      <tag type="list" element_tag="filter">host_filters</tag>
+      <description>Host filters</description>
+      <default/>
+    </arg>
+    <arg section="recipe" type="string" optional="1">
+      <name>extra-host-filter</name>
+      <metavar>XML</metavar>
+      <tag type="attribute" attrname="extra_filter">machine</tag>
+      <description>Extra host filter</description>
+      <default/>
+    </arg>
+    <arg section="recipe" type="string" optional="1">
+      <name>hostname</name>
+      <metavar>HOSTNAME</metavar>
+      <tag type="attribute" attrname="hostname">machine</tag>
+      <description>Hostname</description>
+      <default/>
+    </arg>
+    <arg section="recipe" type="string">
+      <name>task-cmd</name>
+      <metavar>COMMAND</metavar>
+      <tag type="value">task_cmd</tag>
+      <description>Task command line</description>
+    </arg>
+    <arg section="recipe" type="string" optional="1">
+      <name>env-options</name>
+      <metavar>OPTIONS</metavar>
+      <tag type="value">env_opts</tag>
+      <description>Options for environment creation</description>
+      <default/>
+    </arg>
+    <arg section="recipe" type="string">
+      <name>install-params</name>
+      <metavar>PARAMETERS</metavar>
+      <tag type="value">install_params</tag>
+      <description>Parameters to install packages</description>
+    </arg>
+    <arg section="recipe" type="string" optional="1">
+      <name>repos</name>
+      <metavar>[URL,...]</metavar>
+      <tag type="list" element_tag="repo">repos</tag>
+      <description>URL of yum repos</description>
+      <default/>
+    </arg>
+    <arg section="recipe" type="string" optional="1">
+      <name>packages</name>
+      <metavar>[NAME,...]</metavar>
+      <tag type="list" element_tag="package">packages</tag>
+      <description>Name of packages to be installed on host</description>
+      <default/>
+    </arg>
+    <arg section="recipe" type="string" optional="1">
+      <name>ks-append</name>
+      <metavar>FILE</metavar>
+      <tag type="value">ks_append</tag>
+      <description>Kickstart file</description>
+      <default/>
+    </arg>
+    <arg section="recipe" type="string" optional="1">
+      <name>reserve-time</name>
+      <metavar>HOURS</metavar>
+      <tag type="value">reservetime</tag>
+      <description>How long we should reserve the host</description>
+      <default>0</default>
+    </arg>
+  </arguments>
+</jobConfig>
