@@ -15,8 +15,8 @@
             description: "specified driver need to be tested ,Valid Value : \nSRL(aka serial) BLN(aka balloon) BLK (aka block) SCS (aka scsi) \nNIC (aka netkvm) RNG (aka virtio-rng) PNC (aks pvpanic) INP(aka virtio-input) QSR(qemupciserial)"
         - string:
             name: 'OTHER_PARAMS'
-            default: '-M pc'
-            description: "other info if needed,default is -M pc. The other value like: \n-l ..., --dataplane             parse whether use dataplane config ,only work when specify driver name as BLK ,others will be ignored. \n-m ..., --multiqueue            parse whether use multiqueue config ,only work when specify driver name as 'NIC' or 'SCS' ,other options will be ignored.  \n-t ..., --virio1_0     parse wheter use virtio 1.0 device. \n-M ..., --machine_type=...      parse machine type,valid value:pc,q35"
+            default: '-M q35'
+            description: "other info if needed,default is -M q35. The other value like: \n-l ..., --dataplane             parse whether use dataplane config ,only work when specify driver name as BLK ,others will be ignored. \n-m ..., --multiqueue            parse whether use multiqueue config ,only work when specify driver name as 'NIC' or 'SCS' ,other options will be ignored.  \n-t ..., --virio1_0     parse wheter use virtio 1.0 device. \n-M ..., --machine_type=...      parse machine type,valid value:pc,q35"
         - hidden:
             name: OSVERSION
             default: '{osversion}'

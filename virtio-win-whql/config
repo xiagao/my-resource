@@ -32,8 +32,8 @@ runtest:
             cmd_base2: 'None'
         W10D32-W10D64:
             hostname: 'dell-per440-04.lab.eng.pek2.redhat.com'
-            cmd_base1: 'python3 XMLParsing.py -p W10D -a 32 -c 192.168.0.157'
-            cmd_base2: 'python3 XMLParsing.py -p W10D -a 64 -c 192.168.0.157'
+            cmd_base1: 'python3 XMLParsing.py -p W10D -a 32 -c 192.168.2.148'
+            cmd_base2: 'python3 XMLParsing.py -p W10D -a 64 -c 192.168.2.148'
         W10S:
             hostname: 'dell-per440-05.lab.eng.pek2.redhat.com'
             cmd_base1: 'python3 XMLParsing.py -p W10S -a 64 -c 192.168.0.3'

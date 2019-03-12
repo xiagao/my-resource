@@ -17,6 +17,8 @@ pipeline {
 
     environment {
         GERRIT_URL = 'https://code.engineering.redhat.com/gerrit'
+        HUB_URL = 'https://beaker.engineering.redhat.com'
+        LAB_CONTROLLER = 'lab-01.rhts.eng.pek2.redhat.com'
         YAML_CONFIG = 'kvmqe-ci/jobs/virtio-win-whql/config'
         JOB_GROUP = 'trigger'
     }
