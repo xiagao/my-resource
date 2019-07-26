@@ -22,7 +22,7 @@ jobmd_list:
     non_gating:
         email_recipients: 'xiagao@redhat.com'
         job_owner: 'xiagao'
-        is_gating: 'false'		
+        is_gating: 'false'
 
 kar_cmd_list:
     win2k12r2_win2k16_win2k19_64_el8:
