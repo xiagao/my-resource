@@ -1,62 +1,35 @@
 builds:
-	virtio-win:
-		target_stream:
-			el8:
-				task:
-					win2k12r2-win2k16-win2k19-64-runtest:
-						jobmd: 'non_gating'
-						kar_cmd: 'win2k12r2_win2k16_win2k19_64_el8'
-			el7:
-				task:
-					win2k12r2-win2k16-win2k19-64-runtest:
-						jobmd: 'non_gating'
-						kar_cmd: 'win2k12r2_win2k16_win2k19_64_el7'
-	virtio-win-prewhql:
-		el8:
-				task:
-					win2k12r2-win2k16-win2k19-64-runtest:
-						jobmd: 'non_gating'
-						kar_cmd: 'win2k12r2_win2k16_win2k19_64_el8'
+    virtio-win:
+        target_stream:
+            el8:
+                task:
+                    win2k12r2-win2k16-win2k19-64-runtest:
+                        jobmd: 'non_gating'
+                        kar_cmd: 'win2k12r2_win2k16_win2k19_64_el8'
+            el7:
+                task:
+                    win2k12r2-win2k16-win2k19-64-runtest:
+                        jobmd: 'non_gating'
+                        kar_cmd: 'win2k12r2_win2k16_win2k19_64_el7'
+    virtio-win-prewhql:
+         target_stream:
+             el8:
+                task:
+                    win2k12r2-win2k16-win2k19-64-runtest:
+                        jobmd: 'non_gating'
+                        kar_cmd: 'win2k12r2_win2k16_win2k19_64_el8'
 jobmd_list:
-	non_gating:
-		email_recipients: 'xiagao@redhat.com'
-		job_owner: 'xiagao'
-		is_gating: 'false'		
-	gating:
-		email_recipients: 'xiagao@redhat.com'
-		job_owner: 'xiagao'
-		is_gating: 'true'
-		
+    non_gating:
+        email_recipients: 'xiagao@redhat.com'
+        job_owner: 'xiagao'
+        is_gating: 'false'		
+
 kar_cmd_list:
-	win7_win2k8_32_el8:
-		cmd: 'python3 ConfigTest.py --category=virtio_win_acceptance --guestname=Win7,Win2008 --platform=i386 --driveformat=virtio_blk --clone=yes --rng_type=no_virtio_rng,virtio_rng --machines=q35'
-		install_params: '--verbose --downgrade --install-virtqemu ${{LATEST_FAST_VIRT}}'
-		hostname: 'dell-per440-01.lab.eng.pek2.redhat.com'
-	win7_win2k8_32_el7:
-		cmd: 'python ConfigTest.py --category=virtio_win_acceptance --guestname=Win7,Win2008 --platform=i386 --driveformat=virtio_blk --clone=yes --rng_type=no_virtio_rng,virtio_rng'
-		install_params: 'qemu-kvm-rhev@rhevh-rhel-${{OS_VERSION}}-candidate'
-		hostname: 'dell-per440-01.lab.eng.pek2.redhat.com'
-	win2k8_win2k8r2_64_el8:
-		cmd: 'python3 ConfigTest.py --category=virtio_win_acceptance --guestname=Win2008,Win2008..r2 --platform=x86_64 --clone=yes --rng_type=no_virtio_rng,virtio_rng --machines=q35'
-		install_params: '--verbose --downgrade --install-virtqemu ${{LATEST_FAST_VIRT}}'
-		hostname: 'dell-per440-02.lab.eng.pek2.redhat.com'
-	win2k8_win2k8r2_64_el7:
-		cmd: 'python ConfigTest.py --category=virtio_win_acceptance --guestname=Win2008,Win2008..r2 --platform=x86_64 --clone=yes --rng_type=no_virtio_rng,virtio_rng'
-		install_params: 'qemu-kvm-rhev@rhevh-rhel-${{OS_VERSION}}-candidate'
-		hostname: 'dell-per440-02.lab.eng.pek2.redhat.com'
-	win8_win10_32_el8:
-		cmd: 'python3 ConfigTest.py --category=virtio_win_acceptance --guestname=Win8..0,Win10 --platform=i386 --driveformat=virtio_blk --clone=yes --rng_type=no_virtio_rng,virtio_rng --machines=q35'
-		install_params: '--verbose --downgrade --install-virtqemu ${{LATEST_FAST_VIRT}}'
-		hostname: 'dell-per440-03.lab.eng.pek2.redhat.com'
-	win8_win10_32_el7:
-		cmd: 'python ConfigTest.py --category=virtio_win_acceptance --guestname=Win8..0,Win10 --platform=i386 --driveformat=virtio_blk --clone=yes --rng_type=no_virtio_rng,virtio_rng'
-		install_params: 'qemu-kvm-rhev@rhevh-rhel-${{OS_VERSION}}-candidate'
-		hostname: 'dell-per440-03.lab.eng.pek2.redhat.com'
-	win2k12r2_win2k16_win2k19_64_el8:
-		cmd: 'python3 ConfigTest.py --category=virtio_win_acceptance --guestname=Win2012..r2,Win2016,Win2019 --platform=x86_64 --clone=yes --rng_type=no_virtio_rng,virtio_rng --machines=q35'
-		install_params: '--verbose --downgrade --install-virtqemu ${{LATEST_FAST_VIRT}}'
-		hostname: 'hp-dl385g10-18.lab.eng.pek2.redhat.com'
-	win2k12r2_win2k16_win2k19_64_el7:
-		cmd: 'python ConfigTest.py --category=virtio_win_acceptance --guestname=Win2012..r2,Win2016,Win2019 --platform=x86_64 --clone=yes --rng_type=no_virtio_rng,virtio_rng'
-		install_params: 'qemu-kvm-rhev@rhevh-rhel-${{OS_VERSION}}-candidate'
-		hostname: 'hp-dl385g10-18.lab.eng.pek2.redhat.com'
+    win2k12r2_win2k16_win2k19_64_el8:
+        cmd: 'python3 ConfigTest.py --category=virtio_win_acceptance --guestname=Win2012..r2,Win2016,Win2019 --platform=x86_64 --clone=yes --rng_type=no_virtio_rng,virtio_rng --machines=q35'
+        install_params: '--verbose --downgrade --install-virtqemu ${{LATEST_FAST_VIRT}}'
+        hostname: 'hp-dl385g10-18.lab.eng.pek2.redhat.com'
+    win2k12r2_win2k16_win2k19_64_el7:
+        cmd: 'python ConfigTest.py --category=virtio_win_acceptance --guestname=Win2012..r2,Win2016,Win2019 --platform=x86_64 --clone=yes --rng_type=no_virtio_rng,virtio_rng'
+        install_params: 'qemu-kvm-rhev@rhevh-rhel-${{OS_VERSION}}-candidate'
+        hostname: 'hp-dl385g10-18.lab.eng.pek2.redhat.com'
