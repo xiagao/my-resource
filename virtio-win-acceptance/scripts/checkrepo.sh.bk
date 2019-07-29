@@ -1,0 +1,12 @@
+#!/bin/bash
+. $WORKSPACE/kvmqe-ci/lib/common.sh
+PROFILE="$WORKSPACE/static-repo.properties"
+
+touch $PROFILE
+REPO_URL=$(grep "^STATIC_REPO_URLS_$DEPEND_TAG=" $PROFILE | cut -d'=' -f2)
+if [ -n "$REPO_URL" ]; then exit 0; fi
+
+REPO_URL="http://download.eng.bos.redhat.com/rel-eng/repos/$DEPEND_TAG"
+curl -skL "$REPO_URL" | grep "404 Not Found" -q
+if [ $? -eq 0 ]; then REPO_URL=""; fi
+sed -i "s'\(STATIC_REPO_URLS=\).*'\1$REPO_URL'" $PROFILE
