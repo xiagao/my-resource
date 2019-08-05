@@ -8,7 +8,7 @@ tasks:
 
 jobmd_list:
         non_gating:
-                email_recipients: 'xiagao@redhat.com, lijin@redhat.com, wyu@redhat.com, phou@redhat.com'
+                email_recipients: 'xiagao@redhat.com'
                 job_owner: 'xiagao'
 
 wqhl_cmd_list:
