@@ -361,7 +361,7 @@ def main():
 
     # update the latest version according to tag,such as supp-rhel-8.0.1-candidate
     tag = sys.argv[1]
-    main_version = tag.split('-')[2].split('.')[0]
+    main_version = tag.split('-')[1].split('.')[0]
     virtio_win_version = "el%s" % main_version
     logger.info('virtio_win_version is %s' % virtio_win_version)
 
