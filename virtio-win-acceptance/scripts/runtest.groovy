@@ -16,7 +16,7 @@ pipeline {
 
     environment {
         GERRIT_URL = 'https://code.engineering.redhat.com/gerrit'
-        YAML_CONFIG = 'kvmqe-ci/jobs/virtio-win-acceptance/config/virtio_win_config.yml'
+        YAML_CONFIG = 'my-resource/virtio-win-acceptance/config/virtio_win_config.yml'
         ARTIFACT = 'brew-build'
         HUB_URL = 'https://beaker.engineering.redhat.com'
         LABCONTROLLER = 'lab-01.rhts.eng.pek2.redhat.com'
@@ -40,8 +40,8 @@ pipeline {
                 checkout(
                     [$class: 'GitSCM', branches: [[name: '*/master']],
                       extensions: [[$class: 'RelativeTargetDirectory',
-                        relativeTargetDir: 'kvmqe-ci']],
-                      userRemoteConfigs: [[url: "${GERRIT_URL}/kvmqe-ci.git"]]
+                        relativeTargetDir: 'my-resource']],
+                      userRemoteConfigs: [[url: "https://github.com/xiagao/my-resource"]]
                     ]
                 )
             }
@@ -124,7 +124,7 @@ pipeline {
             steps {
                 script {
                     logging.info("Run tests")
-                    ws("${env.WORKSPACE}/kvmqe-ci/utils/beaker-workflow") {
+                    ws("${env.WORKSPACE}/my-resource/beaker-workflow") {
                         if (sh(returnStatus: true, script: "${cmdGen}") != 0) {
                             logging.error("Failed to generate beaker job")
                         }

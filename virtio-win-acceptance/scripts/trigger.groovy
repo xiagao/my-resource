@@ -31,7 +31,7 @@ pipeline {
 
     environment {
         GERRIT_URL = 'https://code.engineering.redhat.com/gerrit'
-        YAML_CONFIG = 'kvmqe-ci/jobs/virtio-win-acceptance/config/virtio_win_config.yml'
+        YAML_CONFIG = 'my-resource/virtio-win-acceptance/config/virtio_win_config.yml'
         ARTIFACT = 'brew-build'
         EMAIL_RECIPIENTS = 'xiagao@redhat.com, lijin@redhat.com'
     }
@@ -51,8 +51,8 @@ pipeline {
                 checkout(
                     [$class: 'GitSCM', branches: [[name: '*/master']],
                       extensions: [[$class: 'RelativeTargetDirectory',
-                        relativeTargetDir: 'kvmqe-ci']],
-                      userRemoteConfigs: [[url: "${GERRIT_URL}/kvmqe-ci.git"]]
+                        relativeTargetDir: 'my-resource']],
+                      userRemoteConfigs: [[url: "https://github.com/xiagao/my-resource"]]
                     ]
                 )
             }
@@ -115,9 +115,9 @@ pipeline {
                     logging.info("The new brew package is ${brewNvr} and update iso to NFS.")
                     if (brewNvr =~ /virtio-win-prewhql/) {
                         verNum = brewNvr.split('-')[4]
-                        isoCmd = "${env.WORKSPACE}/kvmqe-ci/jobs/virtio-win-acceptance/scripts/prewhql_iso_create.sh -u -w ${verNum}"
+                        isoCmd = "${env.WORKSPACE}/my-resouce/virtio-win-acceptance/scripts/prewhql_iso_create.sh -u -w ${verNum}"
                     } else if (brewNvr =~ /virtio-win.*el/) {
-                        isoCmd = "${env.WORKSPACE}/kvmqe-ci/jobs/virtio-win-acceptance/scripts/virtio-win/update_virtio_win.py ${brewTag}"
+                        isoCmd = "${env.WORKSPACE}/my-resource/virtio-win-acceptance/scripts/virtio-win/update_virtio_win.py ${brewTag}"
                     } else {
                         logging.error("Failed to get brew pkg version.")
                     }
