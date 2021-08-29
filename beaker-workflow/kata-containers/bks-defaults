@@ -1,0 +1,21 @@
+[defaults]
+jobxml: KataJob.xml
+
+;
+; fedora variants
+;
+
+[KataJob.xml:fedora.x86_64]
+arch: x86_64
+ks-append: ../ks/fedora.ks
+; use a dedicated system for demo
+hostname: dell-per740-12.lab.eng.pek2.redhat.com
+;host-filters: intel
+reserve-time: 24
+
+[KataJob.xml:fedora-rawhide.x86_64]
+arch: x86_64
+ks-append: ../ks/fedora.ks
+; rawhide distros aren't mirrored to PEK lab
+host-filters: intel,bos
+reserve-time: 24

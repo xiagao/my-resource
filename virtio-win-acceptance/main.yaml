@@ -1,0 +1,41 @@
+- project:
+    name: 'virtio-win-testing'
+    jobs:
+        - 'trigger'
+        - 'runtest'
+
+- job-group:
+    name: 'trigger'
+    jobs:
+        - 'virt-kvm-virtio-win-trigger'
+
+- job-group:
+    name: 'runtest'
+    jobs:
+        - 'virt-kvm-{package_name}-{target_stream}-{task}'
+    package_name:
+        - 'virtio-win-prewhql'
+        - 'virtio-win'
+    target_stream:
+        - 'el7'
+        - 'el8'
+        - 'el9'
+    task:
+        - 'win2012-win2016-win2022-runtest'
+        - 'win2012-win2016-runtest'
+        - 'blue-win2019-runtest'
+        - 'blue-win2019-win11-runtest'
+        - 'win10-win2012r2-runtest'
+    exclude:
+        - package_name: 'virtio-win-prewhql'
+          target_stream: 'el7'
+        - package_name: 'virtio-win-prewhql'
+          target_stream: 'el9'
+        - package_name: 'virtio-win'
+          task: 'win2012-win2016-win2022-runtest'
+        - package_name: 'virtio-win-prewhql'
+          task: 'win2012-win2016-runtest'
+        - package_name: 'virtio-win'
+          task: 'blue-win2019-win11-runtest'
+        - package_name: 'virtio-win-prewhql'
+          task: 'blue-win2019-runtest'

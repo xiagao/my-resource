@@ -1,0 +1,448 @@
+[defaults]
+jobxml: AutoJob.xml
+
+;
+; el6 variants
+;
+
+[AutoJob.xml:el6.x86_64]
+arch: x86_64
+ks-append: ks/el6.ks
+host-filters: pek
+reserve-time: 24
+
+[AutoJob.xml:el6.x86_64-intel]
+arch: x86_64
+ks-append: ks/el6.ks
+host-filters: intel,pek
+reserve-time: 24
+
+[AutoJob.xml:el6.x86_64-intel.brew-build]
+arch: x86_64
+ks-append: ks/el6.ks
+host-filters: intel,pek,min-cores-8,min-mem-8g,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 48
+
+[AutoJob.xml:el6.x86_64-amd]
+arch: x86_64
+ks-append: ks/el6.ks
+host-filters: amd,pek
+reserve-time: 24
+
+[AutoJob.xml:el6.x86_64-amd.brew-build]
+arch: x86_64
+ks-append: ks/el6.ks
+host-filters: amd,pek,min-cores-8,min-mem-8g,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 48
+
+;
+; el7 variants
+;
+
+[AutoJob.xml:el7.x86_64]
+arch: x86_64
+ks-append: ks/el7.ks
+host-filters: pek
+reserve-time: 24
+
+[AutoJob.xml:el7.x86_64-intel]
+arch: x86_64
+ks-append: ks/el7.ks
+host-filters: intel,pek
+reserve-time: 24
+
+[AutoJob.xml:el7.x86_64-intel.brew-build]
+arch: x86_64
+ks-append: ks/el7.ks
+host-filters: intel,pek,min-cores-8,min-mem-8g,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 48
+
+[AutoJob.xml:el7.x86_64-intel.productmd-compose]
+arch: x86_64
+ks-append: ks/el7.ks
+host-filters: intel,bos,min-mem-8g,min-cores-8,min-disk-150g
+env-options: --stable --verbose
+reserve-time: 48
+
+[AutoJob.xml:el7.x86_64-amd]
+arch: x86_64
+ks-append: ks/el7.ks
+host-filters: amd,pek
+reserve-time: 24
+
+[AutoJob.xml:el7.x86_64-amd.brew-build]
+arch: x86_64
+ks-append: ks/el7.ks
+host-filters: amd,pek,min-cores-8,min-mem-8g,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 48
+
+[AutoJob.xml:el7.x86_64-amd.productmd-compose]
+arch: x86_64
+ks-append: ks/el7.ks
+host-filters: amd,bos,min-mem-8g,min-cores-8,min-disk-150g
+env-options: --stable --verbose
+reserve-time: 48
+
+[AutoJob.xml:el7.ppc64le-power8]
+arch: ppc64le
+ks-append: ks/el7.ks
+host-filters: power8
+reserve-time: 24
+
+[AutoJob.xml:el7.ppc64le-power8.brew-build]
+arch: ppc64le
+ks-append: ks/el7.ks
+host-filters: power8,min-processors-8,min-mem-64g
+env-options: --stable --verbose
+reserve-time: 24
+
+[AutoJob.xml:el7.ppc64le-power8.productmd-compose]
+arch: ppc64le
+ks-append: ks/el7.ks
+host-filters: power8,min-processors-8,min-mem-64g
+env-options: --stable --verbose
+reserve-time: 24
+
+[AutoJob.xml:el7.ppc64le-power9]
+arch: ppc64le
+ks-append: ks/el7.ks
+host-filters: power9,min-processors-8
+reserve-time: 24
+
+[AutoJob.xml:el7.ppc64le-power9.brew-build]
+arch: ppc64le
+ks-append: ks/el7.ks
+host-filters: power9,min-processors-8
+env-options: --stable --verbose
+reserve-time: 24
+
+[AutoJob.xml:el7.ppc64le-power9.productmd-compose]
+arch: ppc64le
+ks-append: ks/el7.ks
+host-filters: power9
+env-options: --stable --verbose
+reserve-time: 24
+
+;
+; el8 variants
+;
+
+[AutoJob.xml:el8.x86_64]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: pek,min-cores-8,min-mem-8g,min-disk-256g
+reserve-time: 48
+system-pool: !virtkvm-gating
+
+[AutoJob.xml:el8.x86_64.brew-build]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: pek,min-cores-8,min-mem-8g,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 48
+
+[AutoJob.xml:el8.x86_64.redhat-module]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: pek,min-cores-8,min-mem-8g,min-disk-256g
+env-options: --stage --verbose
+reserve-time: 48
+system-pool: !virtkvm-gating
+
+[AutoJob.xml:el8.x86_64-intel]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: intel,pek
+reserve-time: 24
+
+[AutoJob.xml:el8.x86_64-intel.brew-build]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: intel,pek,min-cores-8,min-mem-8g,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 48
+
+[AutoJob.xml:el8.x86_64-intel.redhat-module]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: intel,pek,min-cores-8,min-mem-8g,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 48
+system-pool: virtkvm-gating
+
+[AutoJob.xml:el8.x86_64-intel.productmd-compose]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: intel,bos,min-mem-8g,min-cores-8,min-disk-150g
+env-options: --stable --verbose
+reserve-time: 48
+
+[AutoJob.xml:el8.x86_64-intel.productmd-av-compose]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: intel,bos,min-mem-8g,min-cores-8,min-disk-150g
+env-options: --stable --verbose
+reserve-time: 48
+
+[AutoJob.xml:el8.x86_64-amd]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: amd,pek
+reserve-time: 24
+
+[AutoJob.xml:el8.x86_64-amd.brew-build]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: amd,pek,min-cores-8,min-mem-8g,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 48
+
+[AutoJob.xml:el8.x86_64-amd.redhat-module]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: amd,pek,min-cores-8,min-mem-8g,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 48
+system-pool: virtkvm-gating
+
+[AutoJob.xml:el8.x86_64-amd.productmd-compose]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: amd,bos,min-mem-8g,min-cores-8,min-disk-150g
+env-options: --stable --verbose
+reserve-time: 48
+
+[AutoJob.xml:el8.x86_64-amd.productmd-av-compose]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: amd,bos,min-mem-8g,min-cores-8,min-disk-150g
+env-options: --stable --verbose
+reserve-time: 48
+
+[AutoJob.xml:el8.ppc64le-power8]
+arch: ppc64le
+ks-append: ks/el8.ks
+host-filters: power8,min-processors-8,min-mem-64g
+reserve-time: 24
+
+[AutoJob.xml:el8.ppc64le-power8.brew-build]
+arch: ppc64le
+ks-append: ks/el8.ks
+host-filters: power8,min-processors-8,min-mem-64g
+env-options: --stable --verbose
+reserve-time: 24
+
+[AutoJob.xml:el8.ppc64le-power8.redhat-module]
+arch: ppc64le
+ks-append: ks/el8.ks
+host-filters: power8,min-processors-8,min-mem-64g
+env-options: --stable --verbose
+reserve-time: 24
+
+[AutoJob.xml:el8.ppc64le-power8.productmd-compose]
+arch: ppc64le
+ks-append: ks/el8.ks
+host-filters: power8,min-processors-8,min-mem-64g
+env-options: --stable --verbose
+reserve-time: 24
+
+[AutoJob.xml:el8.ppc64le-power8.productmd-av-compose]
+arch: ppc64le
+ks-append: ks/el8.ks
+host-filters: power8,min-processors-8,min-mem-64g
+env-options: --stable --verbose
+reserve-time: 24
+
+[AutoJob.xml:el8.ppc64le-power9]
+arch: ppc64le
+ks-append: ks/el8.ks
+host-filters: power9,min-processors-8
+reserve-time: 24
+
+[AutoJob.xml:el8.ppc64le-power9.brew-build]
+arch: ppc64le
+ks-append: ks/el8.ks
+host-filters: power9,min-processors-8
+env-options: --stable --verbose
+reserve-time: 24
+
+[AutoJob.xml:el8.ppc64le-power9.redhat-module]
+arch: ppc64le
+ks-append: ks/el8.ks
+host-filters: power9,min-processors-8
+env-options: --stable --verbose
+reserve-time: 24
+
+[AutoJob.xml:el8.ppc64le-power9.productmd-compose]
+arch: ppc64le
+ks-append: ks/el8.ks
+host-filters: power9,min-processors-8
+env-options: --stable --verbose
+reserve-time: 24
+
+[AutoJob.xml:el8.ppc64le-power9.productmd-av-compose]
+arch: ppc64le
+ks-append: ks/el8.ks
+host-filters: power9,min-processors-8
+env-options: --stable --verbose
+reserve-time: 24
+
+[AutoJob.xml:el8.aarch64]
+arch: aarch64
+ks-append: ks/el8.ks
+host-filters: aarch64,min-processors-8,min-disk-256g
+reserve-time: 24
+
+[AutoJob.xml:el8.aarch64.brew-build]
+arch: aarch64
+ks-append: ks/el8.ks
+host-filters: aarch64,min-processors-8,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 24
+
+[AutoJob.xml:el8.aarch64.redhat-module]
+arch: aarch64
+ks-append: ks/el8.ks
+host-filters: aarch64,min-processors-8,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 24
+
+[AutoJob.xml:el8.aarch64.productmd-compose]
+arch: aarch64
+ks-append: ks/el8.ks
+host-filters: aarch64,min-processors-8,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 24
+
+[AutoJob.xml:el8.aarch64.productmd-av-compose]
+arch: aarch64
+ks-append: ks/el8.ks
+host-filters: aarch64,min-processors-8,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 24
+
+;
+; el9 variants
+;
+
+[AutoJob.xml:el9.x86_64]
+arch: x86_64
+ks-append: ks/el9.ks
+host-filters: pek,min-cores-8,min-mem-8g,min-disk-256g
+reserve-time: 48
+system-pool: !virtkvm-gating
+
+[AutoJob.xml:el9.x86_64.brew-build]
+arch: x86_64
+ks-append: ks/el9.ks
+host-filters: pek,min-cores-8,min-mem-8g,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 48
+system-pool: !virtkvm-gating
+
+[AutoJob.xml:el9.x86_64-intel]
+arch: x86_64
+ks-append: ks/el9.ks
+host-filters: intel,pek
+reserve-time: 24
+system-pool: !virtkvm-gating
+
+[AutoJob.xml:el9.x86_64-intel.brew-build]
+arch: x86_64
+ks-append: ks/el9.ks
+host-filters: intel,pek,min-cores-8,min-mem-8g,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 48
+system-pool: virtkvm-gating
+
+[AutoJob.xml:el9.x86_64-intel.productmd-compose]
+arch: x86_64
+ks-append: ks/el9.ks
+host-filters: intel,bos,min-mem-8g,min-cores-8,min-disk-150g
+env-options: --stable --verbose
+reserve-time: 48
+
+[AutoJob.xml:el9.x86_64-amd]
+arch: x86_64
+ks-append: ks/el9.ks
+host-filters: amd,pek
+reserve-time: 24
+system-pool: !virtkvm-gating
+
+[AutoJob.xml:el9.x86_64-amd.brew-build]
+arch: x86_64
+ks-append: ks/el9.ks
+host-filters: amd,pek,min-cores-8,min-mem-8g,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 48
+system-pool: virtkvm-gating
+
+[AutoJob.xml:el9.x86_64-amd.productmd-compose]
+arch: x86_64
+ks-append: ks/el9.ks
+host-filters: amd,bos,min-mem-8g,min-cores-8,min-disk-150g
+env-options: --stable --verbose
+reserve-time: 48
+
+[AutoJob.xml:el9.aarch64]
+arch: aarch64
+ks-append: ks/el9.ks
+host-filters: aarch64,min-processors-8,min-disk-256g
+reserve-time: 24
+
+[AutoJob.xml:el9.aarch64.brew-build]
+arch: aarch64
+ks-append: ks/el9.ks
+host-filters: aarch64,min-processors-8,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 24
+
+[AutoJob.xml:el9.aarch64.productmd-compose]
+arch: aarch64
+ks-append: ks/el9.ks
+host-filters: aarch64,bos,min-processors-8,min-disk-256g
+env-options: --stable --verbose
+reserve-time: 24
+
+;
+; feature specific profile
+;
+
+[AutoJob.xml:el8.x86_64.cpu_hotplug]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: pek,min-cores-8,min-mem-8g
+env-options: --verbose
+reserve-time: 24
+
+[AutoJob.xml:el8.x86_64.cpu_model]
+arch: x86_64
+ks-append: ks/el8.ks
+system-pool: virtkvm-kernel-ci-cpu_model
+env-options: --verbose
+reserve-time: 24
+
+[AutoJob.xml:el8.x86_64.memory]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: pek,min-cores-8,min-mem-32g
+env-options: --verbose
+reserve-time: 24
+
+[AutoJob.xml:el8.x86_64.virtual_network]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: pek,min-cores-8,min-mem-8g
+env-options: --verbose
+reserve-time: 24
+
+[AutoJob.xml:el8.x86_64.timer_device]
+arch: x86_64
+ks-append: ks/el8.ks
+host-filters: pek,min-cores-8,min-mem-8g
+env-options: --verbose
+reserve-time: 24
