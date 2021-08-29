@@ -1,6 +1,6 @@
-builds:
+builds
         virtio-win:
-                target_stream:
+                arget_stream:
                         el8:
                                 tasks:
                                         win2012-win2016-runtest:
@@ -28,12 +28,6 @@ builds:
                                         win2012-win2016-runtest:
                                                 jobmd: 'non_gating'
                                                 kar_cmd: 'win2012_win2016_el9'
-                                        blue-win2019-runtest:
-                                                jobmd: 'non_gating'
-                                                kar_cmd: 'blue_win2019_el9'
-                                        win10-win2012r2-runtest:
-                                                jobmd: 'non_gating'
-                                                kar_cmd: 'win10_win2012r2_el9'
         virtio-win-prewhql:
                 target_stream:
                         el8:
@@ -72,6 +66,7 @@ kar_cmd_list:
         win2012_win2016_el9:
                 cmd: 'python ConfigTest.py --category=${{LOOP_NAME}} --guestname=Win2012..r1,Win2016 --driveformat=virtio_blk --clone=yes --rng_type=no_virtio_rng,virtio_rng'
                 install_params: 'qemu-kvm@rhel-${{OS_VERSION}}-beta-candidate'
+                hostname: 'dell-per440-01.lab.eng.pek2.redhat.com'
         blue_win2019_el8:
                 cmd: 'python3 ConfigTest.py --category=${{LOOP_NAME}} --guestname=Win8..1,Win2019 --clone=yes --rng_type=no_virtio_rng,virtio_rng --machines=q35'
                 install_params: '--verbose --install-virtqemu ${{LATEST_FAST_VIRT}}'
@@ -87,6 +82,7 @@ kar_cmd_list:
         blue_win2019_el9:
                 cmd: 'python ConfigTest.py --category=${{LOOP_NAME}} --guestname=Win8..1,Win2019 --clone=yes --rng_type=no_virtio_rng,virtio_rng'
                 install_params: 'qemu-kvm@rhel-${{OS_VERSION}}-beta-candidate'
+                hostname: 'dell-per440-02.lab.eng.pek2.redhat.com'
         win10_win2012r2_el8:
                 cmd: 'python3 ConfigTest.py --category=${{LOOP_NAME}} --guestname=Win10,Win2012..r2 --driveformat=virtio_blk --clone=yes --rng_type=no_virtio_rng,virtio_rng --machines=q35'
                 install_params: '--verbose --install-virtqemu ${{LATEST_FAST_VIRT}}'
@@ -98,3 +94,4 @@ kar_cmd_list:
         win10_win2012r2_el9:
                 cmd: 'python ConfigTest.py --category=${{LOOP_NAME}} --guestname=Win10,Win2012..r2 --driveformat=virtio_blk --clone=yes --rng_type=no_virtio_rng,virtio_rng'
                 install_params: 'qemu-kvm@rhel-${{OS_VERSION}}-beta-candidate'
+                hostname: 'dell-per440-03.lab.eng.pek2.redhat.com'
