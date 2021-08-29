@@ -28,12 +28,6 @@ builds:
                                         win2012-win2016-runtest:
                                                 jobmd: 'non_gating'
                                                 kar_cmd: 'win2012_win2016_el9'
-                                        blue-win2019-runtest:
-                                                jobmd: 'non_gating'
-                                                kar_cmd: 'blue_win2019_el9'
-                                        win10-win2012r2-runtest:
-                                                jobmd: 'non_gating'
-                                                kar_cmd: 'win10_win2012r2_el9'
         virtio-win-prewhql:
                 target_stream:
                         el8:
